@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpaceKidz Uniform Orders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1d2a5b; --navy-2:#2c3d7a; --sun:#ffc93c; --sky:#eef4ff; --coral:#ff7a59;
+    --ink:#1f2433; --muted:#5d6478; --line:#dde3f0; --ok:#1e9e6a; --err:#d64545; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:var(--sky);padding-bottom:90px}
+  h1,h2,h3{font-family:"Baloo 2",Nunito,sans-serif;line-height:1.15;margin:0}
+  .hero{background:var(--navy);color:#fff;padding:32px 16px 56px;text-align:center;position:relative;overflow:hidden}
+  .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:var(--sun);opacity:.9}
+  .hero::before{width:14px;height:14px;top:22px;left:12%}
+  .hero::after{width:8px;height:8px;top:60px;right:15%;background:#fff}
+  .brand{display:inline-block;background:var(--sun);color:var(--navy);font-family:"Baloo 2";font-weight:800;border-radius:999px;padding:4px 16px;font-size:15px;letter-spacing:.5px}
+  .hero h1{font-size:30px;margin-top:12px}
+  .hero p{max-width:520px;margin:8px auto 0;opacity:.9}
+  main{max-width:760px;margin:-34px auto 0;padding:0 16px;position:relative}
+  .card{background:var(--card);border-radius:18px;padding:22px 18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(29,42,91,.08)}
+  .card-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--sun);display:grid;place-items:center;font-family:"Baloo 2";font-weight:800}
+  .card-head h2{font-size:22px;color:var(--navy)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .full{grid-column:1/-1}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-weight:700;font-size:14px;margin-bottom:5px}
+  input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy-2);box-shadow:0 0 0 3px rgba(44,61,122,.15)}
+  .invalid{border-color:var(--err)!important}
+  .hint{color:var(--muted);font-size:14px;margin:0 0 14px}
+  .note{background:#fff8e3;border:1px solid #ffe3a0;border-radius:12px;padding:10px 12px;font-size:14px;margin-bottom:14px}
+  .products{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.products{grid-template-columns:1fr}}
+  .product{border:1.5px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .product h3{font-size:18px;color:var(--navy)}
+  .tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;margin-left:6px;vertical-align:middle}
+  .tag.summer{background:#fff1c7;color:#8a5a00}
+  .tag.winter{background:#e2ebff;color:var(--navy-2)}
+  .price{font-weight:700;color:var(--ink);font-size:14px}
+  .row{display:grid;grid-template-columns:1fr 1fr 74px;gap:8px}
+  .row select{padding:9px 8px;font-size:14px}
+  .fixed{padding:9px 8px;font-size:14px;border:1.5px dashed var(--line);border-radius:10px;color:var(--muted)}
+  .btn{font:inherit;font-weight:700;border:none;border-radius:12px;padding:11px 16px;cursor:pointer}
+  .btn-add{background:var(--navy);color:#fff}
+  .btn-add:hover{background:var(--navy-2)}
+  .btn-main{background:var(--sun);color:var(--navy);font-size:18px;width:100%;padding:15px;font-family:"Baloo 2";font-weight:800}
+  .btn-main:disabled{opacity:.6;cursor:wait}
+  .btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+  .cart{margin-top:18px;border-top:2px dashed var(--line);padding-top:14px}
+  .cart h3{font-size:18px;color:var(--navy);margin-bottom:8px}
+  .empty{color:var(--muted);font-size:14px}
+  .line{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .line .rm{background:none;border:none;color:var(--err);font-weight:700;cursor:pointer;font:inherit;font-size:13px}
+  .group{background:var(--sky);border-radius:10px;padding:8px 10px;margin:8px 0;font-size:14px;display:flex;justify-content:space-between;gap:8px}
+  .totals{margin-top:10px;font-size:15px}
+  .totals div{display:flex;justify-content:space-between;padding:3px 0}
+  .totals .save{color:var(--ok);font-weight:700}
+  .totals .grand{font-family:"Baloo 2";font-size:24px;font-weight:800;color:var(--navy);border-top:2px solid var(--navy);margin-top:6px;padding-top:6px}
+  .bank{background:var(--navy);color:#fff;border-radius:14px;padding:16px;margin-bottom:16px}
+  .bank h3{color:var(--sun);font-size:18px;margin-bottom:8px}
+  .bank dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:15px}
+  .bank dt{opacity:.75}.bank dd{margin:0;font-weight:700}
+  .bank .ref{color:var(--sun)}
+  .upload{border:2px dashed var(--navy-2);border-radius:14px;padding:16px;text-align:center;background:#f7f9ff;cursor:pointer;display:block}
+  .upload input{display:none}
+  .upload strong{color:var(--navy)}
+  .check{display:flex;gap:10px;align-items:flex-start;font-weight:600;font-size:14px;margin:14px 0}
+  .check input{width:20px;height:20px;flex:none;margin-top:1px}
+  .err-msg{color:var(--err);font-size:14px;font-weight:700;margin-top:10px}
+  .totalbar{position:fixed;left:0;right:0;bottom:0;background:var(--navy);color:#fff;padding:12px 16px;display:flex;justify-content:center;gap:16px;align-items:center;z-index:5}
+  .totalbar strong{color:var(--sun);font-family:"Baloo 2";font-size:20px}
+  .totalbar a{background:var(--sun);color:var(--navy);text-decoration:none;font-weight:800;padding:8px 14px;border-radius:10px}
+  .success{text-align:center;padding:34px 18px}
+  .success .big{font-size:52px}
+  .success h2{color:var(--navy);font-size:28px;margin:6px 0}
+  .success .ord{display:inline-block;background:var(--sun);color:var(--navy);font-family:"Baloo 2";font-weight:800;font-size:22px;padding:4px 18px;border-radius:999px;margin:8px 0}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:10px 16px 20px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="brand">SpaceKidz</span>
+  <h1>School Uniform Order Form</h1>
+  <p>Choose your child's uniform, pay by EFT and upload your proof of payment — all in one place.</p>
+</header>
+
+<main>
+  <form id="orderForm" novalidate>
+
+    <section class="card" id="s1">
+      <div class="card-head"><div class="num">1</div><h2>Child &amp; parent details</h2></div>
+      <div class="grid">
+        <div><label for="childName">Child's name &amp; surname *</label><input type="text" id="childName" autocomplete="off" required></div>
+        <div><label for="childClass">Class *</label>
+          <input type="text" id="childClass" list="classes" placeholder="Select or type" required>
+          <datalist id="classes">
+            <option value="Baby Bloom Class"><option value="Joy Class"><option value="Harmony Class">
+            <option value="Grade RRR"><option value="Grade RR"><option value="Grade R">
+          </datalist>
+        </div>
+        <div><label for="parentName">Parent's name &amp; surname *</label><input type="text" id="parentName" autocomplete="name" required></div>
+        <div><label for="phone">Cellphone (WhatsApp) *</label><input type="tel" id="phone" autocomplete="tel" placeholder="e.g. 082 123 4567" required></div>
+        <div class="full"><label for="email">Email address *</label><input type="email" id="email" autocomplete="email" required></div>
+      </div>
+    </section>
+
+    <section class="card" id="s2">
+      <div class="card-head"><div class="num">2</div><h2>Choose uniform items</h2></div>
+      <p class="note"><strong>Bundle prices apply automatically.</strong> Buy 2 or 5 shirts of the same type and you pay the bundle price — even if you mix colours and sizes.</p>
+      <div class="products" id="products"></div>
+      <div class="cart">
+        <h3>Your order</h3>
+        <div id="cartLines"><p class="empty">No items added yet.</p></div>
+        <div class="totals" id="totals"></div>
+      </div>
+    </section>
+
+    <section class="card" id="s3">
+      <div class="card-head"><div class="num">3</div><h2>Pay &amp; submit</h2></div>
+      <p class="hint">Payment must be made before you receive your order. Please pay the total by EFT, then upload your proof of payment below.</p>
+
+      <div class="bank">
+        <h3>How to pay</h3>
+        <p style="margin:0 0 10px;font-size:15px">Please pay into the <strong>SpaceKidz school account — the same account you use for school fees</strong>.</p>
+        <dl id="bankList"></dl>
+      </div>
+
+      <label class="upload" id="uploadBox">
+        <input type="file" id="pop" accept="image/*,application/pdf">
+        <span id="uploadText"><strong>Tap to upload proof of payment *</strong><br><span style="color:var(--muted);font-size:14px">Photo, screenshot or PDF (max 8 MB)</span></span>
+      </label>
+
+      <div style="margin-top:14px"><label for="notes">Anything we should know? (optional)</label>
+        <textarea id="notes" rows="2" placeholder="e.g. child's name to be printed on the label, collection preferences"></textarea></div>
+
+      <label class="check"><input type="checkbox" id="agree"> I confirm the sizes and colours above are correct and that payment has been made. I understand the order will be released once payment reflects.</label>
+      <div><label for="signedName">Type your full name as your signature *</label><input type="text" id="signedName" required></div>
+
+      <div class="err-msg" id="errMsg" hidden></div>
+      <button class="btn btn-main" type="submit" id="submitBtn" style="margin-top:16px">Submit my order</button>
+    </section>
+  </form>
+
+  <section class="card success" id="success" hidden>
+    <div class="big">🚀</div>
+    <h2>Order received — thank you!</h2>
+    <div class="ord" id="okOrder"></div>
+    <p id="okText"></p>
+    <p class="hint">A copy has been emailed to you. We'll WhatsApp you once your payment is confirmed and the uniform is ready for collection.</p>
+    <button class="btn btn-ghost" id="anotherBtn" type="button">Order for another child</button>
+  </section>
+</main>
+
+<div class="totalbar" id="totalbar"><span><span id="barCount">0 items</span> · <strong id="barTotal">R0</strong></span><a href="#s3">Pay &amp; submit</a></div>
+
+<footer>SpaceKidz (Pty) Ltd · Ravenswood, Boksburg · Questions? WhatsApp <span id="waNum"></span></footer>
+
+<script>
+/* ============ SETTINGS — fill these in ============ */
+const CONFIG = {
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzvnsDX4SqgpPC1P5DMhZ_YLWmRsYIfyxxuilQ_2CW7xBhKU8jslJGaECbkp9ZhSgsi0Q/exec",
+  WHATSAPP: "082 539 8814"
+};
+/* ================================================== */
+
+const COLOURS = ["Black","White","Navy","Blue","Grey","Green","Yellow","Orange","Pink","Apricot"];
+const SHIRT_SIZES = ["1-2","2-3","3-4","4-5","5-6","6-7","7-8"];
+const PRODUCTS = [
+  {id:"ss", name:"Short-sleeve T-shirt", season:"Summer", sizes:SHIRT_SIZES, colours:COLOURS, bundle:{1:130,2:250,5:600}},
+  {id:"ls", name:"Long-sleeve T-shirt",  season:"Winter", sizes:SHIRT_SIZES, colours:COLOURS, bundle:{1:160,2:300,5:725}},
+  {id:"ts", name:"Tracksuit",            season:"Winter", sizes:["2-3","3-4","4-5","5-6","6-7"], colours:["Navy & Blue"], price:520},
+  {id:"dm", name:"Dri-Mac Jacket",       season:"Winter", sizes:["2-3","3-4","4-5","5-6","6-7","7-8"], colours:["Navy"], price:290}
+];
+const byId = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+let cart = [];
+
+const $ = id => document.getElementById(id);
+const R = n => "R" + n.toLocaleString("en-ZA");
+
+function bundleBreakdown(n, b){
+  const fives = Math.floor(n/5), rest = n%5, twos = Math.floor(rest/2), ones = rest%2;
+  const parts = [];
+  if (fives) parts.push(fives + " × 5-pack");
+  if (twos)  parts.push(twos + " × 2-pack");
+  if (ones)  parts.push(ones + " × single");
+  return { total: fives*b[5] + twos*b[2] + ones*b[1], parts: parts.join(" + ") };
+}
+
+function calc(){
+  let total = 0, full = 0, count = 0; const groups = [];
+  PRODUCTS.forEach(p => {
+    const n = cart.filter(c => c.pid === p.id).reduce((s,c) => s + c.qty, 0);
+    if (!n) return;
+    count += n;
+    if (p.bundle){
+      const bd = bundleBreakdown(n, p.bundle);
+      total += bd.total; full += n * p.bundle[1];
+      groups.push({label: p.name + "s × " + n, detail: bd.parts, amount: bd.total});
+    } else {
+      total += n * p.price; full += n * p.price;
+      groups.push({label: p.name + (n > 1 ? "s" : "") + " × " + n, detail: R(p.price) + " each", amount: n * p.price});
+    }
+  });
+  return {total, full, savings: full - total, count, groups};
+}
+
+function renderProducts(){
+  $("products").innerHTML = PRODUCTS.map(p => {
+    const price = p.bundle ? `${R(p.bundle[1])} each · 2 for ${R(p.bundle[2])} · 5 for ${R(p.bundle[5])}` : R(p.price);
+    const colour = p.colours.length > 1
+      ? `<select id="c_${p.id}" aria-label="Colour"><option value="">Colour</option>${p.colours.map(c=>`<option>${c}</option>`).join("")}</select>`
+      : `<div class="fixed">${p.colours[0]}</div>`;
+    const qty = Array.from({length:10},(_,i)=>`<option>${i+1}</option>`).join("");
+    return `<div class="product">
+      <h3>${p.name}<span class="tag ${p.season.toLowerCase()}">${p.season}</span></h3>
+      <div class="price">${price}</div>
+      <div class="row">
+        <select id="s_${p.id}" aria-label="Size"><option value="">Size (yrs)</option>${p.sizes.map(s=>`<option>${s}</option>`).join("")}</select>
+        ${colour}
+        <select id="q_${p.id}" aria-label="Quantity">${qty}</select>
+      </div>
+      <button type="button" class="btn btn-add" data-add="${p.id}">+ Add to order</button>
+    </div>`;
+  }).join("");
+}
+
+function addItem(pid){
+  const p = byId[pid];
+  const sEl = $("s_"+pid), cEl = $("c_"+pid);
+  const size = sEl.value, colour = cEl ? cEl.value : p.colours[0], qty = parseInt($("q_"+pid).value, 10);
+  sEl.classList.toggle("invalid", !size);
+  if (cEl) cEl.classList.toggle("invalid", !colour);
+  if (!size || !colour) return;
+  const existing = cart.find(c => c.pid===pid && c.size===size && c.colour===colour);
+  if (existing) existing.qty = Math.min(existing.qty + qty, 20); else cart.push({pid, size, colour, qty});
+  sEl.value = ""; if (cEl) cEl.value = ""; $("q_"+pid).value = "1";
+  renderCart();
+}
+
+function renderCart(){
+  const t = calc();
+  if (!cart.length){
+    $("cartLines").innerHTML = `<p class="empty">No items added yet.</p>`;
+    $("totals").innerHTML = "";
+  } else {
+    $("cartLines").innerHTML = cart.map((c,i) => {
+      const p = byId[c.pid];
+      return `<div class="line"><span><strong>${c.qty} ×</strong> ${p.name} · size ${c.size} · ${c.colour}</span><button type="button" class="rm" data-rm="${i}">Remove</button></div>`;
+    }).join("") + t.groups.map(g => `<div class="group"><span><strong>${g.label}</strong><br>${g.detail}</span><strong>${R(g.amount)}</strong></div>`).join("");
+    $("totals").innerHTML =
+      (t.savings > 0 ? `<div class="save"><span>Bundle savings</span><span>– ${R(t.savings)}</span></div>` : "") +
+      `<div class="grand"><span>Total to pay</span><span>${R(t.total)}</span></div>`;
+  }
+  $("barTotal").textContent = R(t.total);
+  $("barCount").textContent = t.count + (t.count === 1 ? " item" : " items");
+}
+
+function renderBank(){
+  const ref = $("childName").value.trim() || "Your child's name & surname";
+  $("bankList").innerHTML = `<dt>Reference</dt><dd class="ref">${escapeHtml(ref)} – Uniform</dd>`
+    + `<dt>Amount</dt><dd class="ref">${R(calc().total)}</dd>`;
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+
+function showErr(msg){ const e = $("errMsg"); e.textContent = msg; e.hidden = !msg; }
+
+function readFile(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(String(r.result).split(",")[1]);
+    r.onerror = () => rej(new Error("Could not read the file."));
+    r.readAsDataURL(file);
+  });
+}
+
+async function submitOrder(ev){
+  ev.preventDefault(); showErr("");
+  const required = ["childName","childClass","parentName","phone","email","signedName"];
+  let bad = null;
+  required.forEach(id => { const el = $(id); const ok = el.value.trim() !== ""; el.classList.toggle("invalid", !ok); if (!ok && !bad) bad = el; });
+  const email = $("email").value.trim();
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ $("email").classList.add("invalid"); bad = bad || $("email"); }
+  const phoneDigits = $("phone").value.replace(/\D/g, "");
+  if ($("phone").value && phoneDigits.length < 9){ $("phone").classList.add("invalid"); bad = bad || $("phone"); }
+  if (bad){ bad.scrollIntoView({behavior:"smooth", block:"center"}); return showErr("Please complete the highlighted fields."); }
+  if (!cart.length){ $("s2").scrollIntoView({behavior:"smooth"}); return showErr("Please add at least one uniform item."); }
+  const file = $("pop").files[0];
+  if (!file){ $("uploadBox").style.borderColor = "var(--err)"; return showErr("Please upload your proof of payment."); }
+  if (file.size > 8*1024*1024) return showErr("Your proof of payment file is larger than 8 MB — please upload a smaller photo or PDF.");
+  if (!$("agree").checked) return showErr("Please tick the confirmation box.");
+  if (CONFIG.SCRIPT_URL.indexOf("http") !== 0) return showErr("This form isn't connected yet — please contact the school on WhatsApp " + CONFIG.WHATSAPP + ".");
+
+  const btn = $("submitBtn"); btn.disabled = true; btn.textContent = "Sending your order…";
+  try {
+    const t = calc();
+    const payload = {
+      childName: $("childName").value.trim(), childClass: $("childClass").value.trim(),
+      parentName: $("parentName").value.trim(), phone: $("phone").value.trim(), email,
+      notes: $("notes").value.trim(), signedName: $("signedName").value.trim(),
+      items: cart.map(c => ({pid:c.pid, size:c.size, colour:c.colour, qty:c.qty})),
+      clientTotal: t.total,
+      pop: { name: file.name, type: file.type || "application/octet-stream", data: await readFile(file) }
+    };
+    const resp = await fetch(CONFIG.SCRIPT_URL, { method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(payload), redirect:"follow" });
+    const out = await resp.json();
+    if (!out.ok) throw new Error(out.error || "Something went wrong.");
+    $("orderForm").hidden = true; $("totalbar").style.display = "none";
+    $("okOrder").textContent = out.orderNo;
+    $("okText").textContent = `${payload.childName} · ${t.count} item${t.count===1?"":"s"} · ${R(out.total)}`;
+    $("success").hidden = false; window.scrollTo({top:0, behavior:"smooth"});
+  } catch(err){
+    showErr("Sorry, your order didn't go through: " + err.message + " Please try again, or WhatsApp us on " + CONFIG.WHATSAPP + ".");
+  } finally {
+    btn.disabled = false; btn.textContent = "Submit my order";
+  }
+}
+
+function orderAnother(){
+  cart = []; renderCart();
+  ["childName","childClass","notes","signedName"].forEach(id => $(id).value = "");
+  $("pop").value = ""; $("agree").checked = false; resetUpload();
+  $("success").hidden = true; $("orderForm").hidden = false; $("totalbar").style.display = "";
+  renderBank(); $("s1").scrollIntoView({behavior:"smooth"});
+}
+function resetUpload(){ $("uploadText").innerHTML = `<strong>Tap to upload proof of payment *</strong><br><span style="color:var(--muted);font-size:14px">Photo, screenshot or PDF (max 8 MB)</span>`; $("uploadBox").style.borderColor = ""; }
+
+/* wiring */
+renderProducts(); renderCart(); renderBank();
+$("waNum").textContent = CONFIG.WHATSAPP;
+$("products").addEventListener("click", e => { const id = e.target.getAttribute("data-add"); if (id) addItem(id); });
+$("cartLines").addEventListener("click", e => { const i = e.target.getAttribute("data-rm"); if (i !== null){ cart.splice(+i, 1); renderCart(); renderBank(); } });
+$("products").addEventListener("change", e => e.target.classList.remove("invalid"));
+document.addEventListener("click", e => { if (e.target.getAttribute && e.target.getAttribute("data-add")) renderBank(); });
+$("childName").addEventListener("input", renderBank);
+$("pop").addEventListener("change", () => { const f = $("pop").files[0]; if (f){ $("uploadText").innerHTML = `<strong>✓ ${escapeHtml(f.name)}</strong><br><span style="color:var(--muted);font-size:14px">Tap to change</span>`; $("uploadBox").style.borderColor = "var(--ok)"; } else resetUpload(); });
+document.querySelectorAll("#s1 input,#signedName").forEach(el => el.addEventListener("input", () => el.classList.remove("invalid")));
+$("orderForm").addEventListener("submit", submitOrder);
+$("anotherBtn").addEventListener("click", orderAnother);
+</script>
+</body>
+</html>
